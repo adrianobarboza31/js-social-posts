@@ -86,7 +86,6 @@ const posts = [
 // inzio
 // stampiano i post nel nostro feed
 const container= document.getElementById("container")
-function stampa(){
     for(let i=0;i<posts.length;i++){
         const post = document.createElement("div")
         post.classList.add("post")
@@ -108,11 +107,14 @@ function stampa(){
         post__image.classList.add("post__image")
         const post__footer=document.createElement("div")
         post__footer.classList.add("post__footer")
+        const likes__cta=document.createElement("div")
+        likes__cta.classList.add("likes__cta")
+        const likes__counter=document.createElement("div")
+        likes__counter.classList.add("likes__counter")
         container.append(post)
         post.append(post__header)
         post__header.append(post_meta)
         post_meta__icon.innerHTML=`<img class="profile-pic" src=${posts[i].author.image} alt=${posts[i].author.name}> `
-        console.log(post_meta__icon)
         post_meta.append(post_meta__icon)
         post_meta__author.innerHTML=posts[i].author.name
         post_meta__time.innerHTML=posts[i].created
@@ -123,18 +125,50 @@ function stampa(){
         post.append(post__text)
         post__image.innerHTML=`<img src=${posts[i].media} alt=""> `
         post.append(post__image)
-        post__footer.innerHTML=`<div class="likes js-likes">
-        <div class="likes__cta">
+        const js_likes=document.createElement("div")
+        js_likes.classList.add("js-likes")
+        js_likes.classList.add("likes")
+        likes__counter.innerHTML= `<div class="likes__counter">
+        Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
+    </div> `
+        js_likes.append(likes__counter)
+        post__footer.append(js_likes)
+        likes__cta.innerHTML=`
             <a class="like-button  js-like-button" href="#" data-postid="1">
                 <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                 <span class="like-button__label">Mi Piace</span>
-            </a>
-        </div>
-        <div class="likes__counter">
-            Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i].likes}</b> persone
-        </div>
-    </div>  `
+            </a>`
+        js_likes.append(likes__cta)
+   
         post.append(post__footer)
     }
+    
+
+let likes=1
+const arraylike=[]
+const nlike=document.querySelectorAll(".js-likes-counter")
+console.log(nlike)
+const likebtn= document.querySelectorAll(".like-button")
+for(let i = 0; i<likebtn.length;i++){
+    likebtn[i].addEventListener("click", mylike)
+    function mylike(){
+             likebtn[i].classList.add("like-button--liked")
+        nlike[i].innerHTML=(posts[i].likes)+1
+        arraylike.push(posts[i].id)
+        }
 }
-stampa()
+console.log(arraylike)
+// likebtn.addEventListener("click", function like(){
+//     likes++
+//     if(likes % 2 == 0){
+//       likes__cta.classList.add("bglike")
+//     }else{
+//     likes__cta.classList.remove("bglike")
+//     }
+// })
+
+    
+
+
+ 
+   
