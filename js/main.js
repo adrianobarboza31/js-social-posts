@@ -144,17 +144,28 @@ const container= document.getElementById("container")
     }
     
 
-let likes=1
+let likes=0
 const arraylike=[]
 const nlike=document.querySelectorAll(".js-likes-counter")
 console.log(nlike)
 const likebtn= document.querySelectorAll(".like-button")
 for(let i = 0; i<likebtn.length;i++){
+    likes++
     likebtn[i].addEventListener("click", mylike)
     function mylike(){
-             likebtn[i].classList.add("like-button--liked")
-        nlike[i].innerHTML=(posts[i].likes)+1
-        arraylike.push(posts[i].id)
+        if(arraylike.includes(posts[i].id)){
+            likebtn[i].classList.remove("like-button--liked")
+            nlike[i].innerHTML=(posts[i].likes)
+            arraylike.shift()
+
+        }else{
+            likebtn[i].classList.add("like-button--liked")
+            nlike[i].innerHTML=(posts[i].likes)+1
+            arraylike.push(posts[i].id)
+        }
+        
+        
+        
         }
 }
 console.log(arraylike)
